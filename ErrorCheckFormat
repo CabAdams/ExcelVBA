@@ -1,0 +1,3 @@
+Sub ErrChkFormat()
+     Selection.NumberFormat = "[Red]""ERROR"";[Red]""ERROR"";[WHITE]""OK"""
+End Sub
