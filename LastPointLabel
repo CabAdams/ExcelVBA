@@ -1,0 +1,35 @@
+Sub LastPointLabel()
+      Dim mySrs As Series
+      Dim iPts As Long
+      Dim bLabeled As Boolean
+      Dim LblCol As String
+      If ActiveChart Is Nothing Then
+        MsgBox "Select a chart and try again.", vbExclamation, "No Chart Selected"
+      Else
+        For Each mySrs In ActiveChart.SeriesCollection
+          bLabeled = False
+          With mySrs
+            LblCol = mySrs.Border.Color
+            For iPts = .Points.Count To 1 Step -1
+              If bLabeled Then
+                ' handle error if point isn't plotted
+                On Error Resume Next
+                ' remove existing label if it's not the last point
+                mySrs.Points(iPts).HasDataLabel = False
+                On Error GoTo 0
+              Else
+                ' handle error if point isn't plotted
+                On Error Resume Next
+                ' add label
+                mySrs.Points(iPts).ApplyDataLabels _
+                    ShowSeriesName:=False, _
+                    ShowCategoryName:=False, ShowValue:=True, _
+                    AutoText:=True, LegendKey:=False
+                bLabeled = (Err.Number = 0)
+                On Error GoTo 0
+              End If
+            Next
+          End With
+        Next
+      End If
+    End Sub
