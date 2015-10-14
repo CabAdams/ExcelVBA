@@ -1,0 +1,40 @@
+Sub RedBox()
+    
+    Application.ScreenUpdating = False
+    
+    If Selection.Borders(xlEdgeLeft).Color > 0 Or Selection.Borders(xlEdgeRight).Color > 0 Or Selection.Borders(xlEdgeTop).Color > 0 Or Selection.Borders(xlEdgeBottom).Color > 0 Then
+        Selection.Borders.LineStyle = xlNone
+    Else
+        Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+        Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+        With Selection.Borders(xlEdgeLeft)
+            .LineStyle = xlDash
+            .Color = -16777024
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With Selection.Borders(xlEdgeTop)
+            .LineStyle = xlDash
+            .Color = -16777024
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With Selection.Borders(xlEdgeBottom)
+            .LineStyle = xlDash
+            .Color = -16777024
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With Selection.Borders(xlEdgeRight)
+            .LineStyle = xlDash
+            .Color = -16777024
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        'Selection.Borders(xlInsideVertical).LineStyle = xlNone
+        'Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+    End If
+
+Application.ScreenUpdating = True
+
+End Sub
