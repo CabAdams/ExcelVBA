@@ -1,0 +1,17 @@
+Sub Underline()
+'
+' Underline Macro
+' Toggles a solid line below the selected cells
+'
+' Keyboard Shortcut: Ctrl+Shift+B
+'
+    If Selection.Borders(xlEdgeBottom).LineStyle = xlContinuous Then
+    Selection.Borders(xlEdgeBottom).LineStyle = xlDot
+    ElseIf Selection.Borders(xlEdgeBottom).LineStyle = xlDot Then
+    Selection.Borders(xlEdgeBottom).LineStyle = xlDashDot
+    ElseIf Selection.Borders(xlEdgeBottom).LineStyle = xlDashDot Then
+    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
+    Else
+    Selection.Borders(xlEdgeBottom).LineStyle = xlContinuous
+    End If
+End Sub
