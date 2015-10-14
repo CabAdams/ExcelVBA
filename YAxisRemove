@@ -1,0 +1,9 @@
+Sub YAxisRemove()
+
+With ActiveChart.Axes(xlValue)
+    .MajorTickMark = xlNone
+    .TickLabelPosition = xlNone
+    .Format.Line.Visible = msoFalse
+End With
+
+End Sub
