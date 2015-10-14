@@ -1,0 +1,80 @@
+Private Declare Function URLDownloadToFile Lib "urlmon" Alias _
+  "URLDownloadToFileA" (ByVal pCaller As Long, ByVal szURL As String, ByVal _
+    szFileName As String, ByVal dwReserved As Long, ByVal lpfnCB As Long) As Long
+  Option Explicit
+Sub DownloadBrokerNotes()
+    Dim strSavePath
+    Dim CoName As String
+    Dim RptDate As String
+    Dim Broker As String
+    Dim Pages As String
+    Dim Sector As String
+    Dim Path As String
+    Dim Filename As String
+    Dim Err404 As String
+    Dim URL As String
+    Dim ext As String
+    Dim fs As Variant
+    Dim a As Variant
+    Dim buf As Variant
+    Dim ret As Long
+    Dim r As Integer
+    Dim rn As Integer
+    Dim i As Integer
+    Dim X As Integer
+    Dim ErrCount As Integer
+    Dim CharArray() As Variant
+      
+    ActiveSheet.Range("A2").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    CharArray() = Array("<", ">", "|", "/", "*", "\", "?", """", "`")
+        
+    With Selection
+        r = .Row
+        rn = .Rows.Count
+    End With
+    
+    For i = r To rn + r - 1
+        CoName = Cells(i, 2).Value
+        RptDate = Format(Cells(i, 1).Value, "yyyy-mm-dd")
+        Broker = Cells(i, 4).Value
+        For X = LBound(CharArray) To UBound(CharArray)
+            Broker = Replace(Broker, CharArray(X), "", 1)
+        Next X
+        Pages = Cells(i, 6).Value
+        Sector = Cells(i, 5).Value
+        If Left(Cells(i, 7).Value, 4) = "http" Then
+            URL = Cells(i, 7).Value
+        Else: URL = Cells(i, 7).Hyperlinks(1).Address
+        End If
+        buf = Split(URL, ".")
+        ext = buf(UBound(buf))
+        Path = "\\iodine\d-kfa\Share\_Technical\Research\" & Sector
+        Filename = CoName & " " & RptDate & " " & Broker & " (" & Pages & "pg)." & ext
+        If Len(Dir(Path, vbDirectory)) = 0 Then
+            MkDir Path
+        End If
+        strSavePath = Path & "\" & Filename
+        ret = URLDownloadToFile(0, URL, strSavePath, 0, 0)
+        If ret <> 0 Then
+            'MsgBox "File " & Filename & " not found!", vbOKOnly
+            Err404 = Err404 & URL & vbCrLf
+            ErrCount = ErrCount + 1
+        End If
+    Next i
+    
+    If ErrCount = 0 Then
+        MsgBox "All reports have been downloaded!"
+    Else
+        Set fs = CreateObject("Scripting.FileSystemObject")
+        Set a = fs.CreateTextFile("\\iodine\d-kfa\Share\_Technical\Research\Error 404.txt", True)
+        a.WriteLine (Err404)
+        a.Close
+        If ErrCount > 0 Then
+            MsgBox ErrCount & " reports not downloaded!", vbCritical
+            Call Shell("C:\WINDOWS\notepad.exe \\iodine\d-kfa\Share\_Technical\Research\Error 404.txt", vbNormalFocus)
+            Else: MsgBox "Reports downloaded with some errors.", vbExclamation
+        End If
+    End If
+End Sub
