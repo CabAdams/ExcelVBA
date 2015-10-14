@@ -1,0 +1,126 @@
+Sub ChartSize()
+'
+' ChartSize Macro
+'
+Dim SelType As String
+
+SelType = TypeName(Selection)
+If SelType = "ChartArea" Or SelType = "Rectangle" Or SelType = "DrawingObjects" Then
+ With ChartSizeForm
+        .StartUpPosition = 0
+        .Left = Application.Left + (0.5 * Application.Width) - (0.5 * .Width)
+        .Top = Application.Top + (0.5 * Application.Height) - (0.5 * .Height)
+        .Show
+    End With
+Else
+MsgBox "Please select object to resize, currect selection is " & SelType
+End If
+
+End Sub
+_______________________________________________________________
+Form code:
+
+Private Sub GoBttn_Click()
+Dim ChtHt, ChtWd, PtsinCm As Long
+Dim Msg As String
+Dim ErrStop As Boolean
+
+ErrSto = False
+PtsinCm = 72 / 2.54
+
+If ComboBox1.Value = "Full page" Then
+    ChtHt = 16
+    ChtWd = 20.5
+End If
+If ComboBox1.Value = "Quarter page" Then
+    ChtHt = 6.8
+    ChtWd = 13.2
+End If
+If ComboBox1.Value = "Quarter page with strapline" Then
+    ChtHt = 7.3
+    ChtWd = 10.1
+End If
+If ComboBox1.Value = "Half page vertical" Then
+    ChtHt = 14.8
+    ChtWd = 13.2
+End If
+If ComboBox1.Value = "Half page vertical with strapline" Then
+    ChtHt = 14.8
+    ChtWd = 10.1
+End If
+If ComboBox1.Value = "Half page horisontal" Then
+    ChtHt = 6.8
+    ChtWd = 26.76
+End If
+If ComboBox1.Value = "Half page horisontal with strapline" Then
+    ChtHt = 6.8
+    ChtWd = 20.5
+End If
+If ComboBox1.Value = "Custom..." Then
+    If HtBox.Value = "" Or WdBox.Value = "" Then
+    MsgBox ("Please insert custom dimensions")
+    ErrStop = True
+    Else
+    ChtHt = HtBox.Value
+    ChtWd = WdBox.Value
+    End If
+End If
+If ComboBox1.Value = "Please select size..." Then
+    MsgBox ("No size selected")
+    ErrStop = True
+End If
+
+If ErrStop = False Then
+'Msg = "Chart being resized to " & ChtHt & "cm x " & ChtWd & "cm"
+'MsgBox (Msg)
+
+With Selection
+    .Height = ChtHt * PtsinCm
+    .Width = ChtWd * PtsinCm
+End With
+
+ComboBox1.Value = "Please select size..."
+HtBox.Value = ""
+WdBox.Value = ""
+
+ChartSizeForm.Hide
+End If
+
+End Sub
+
+
+Private Sub ComboBox1_Change()
+If ComboBox1.Value = "Custom..." Then
+CustomLbl.Visible = True
+HtLbl.Visible = True
+WdLbl.Visible = True
+HtBox.Visible = True
+WdBox.Visible = True
+CmLbl1.Visible = True
+CmLbl2.Visible = True
+Else
+CustomLbl.Visible = False
+HtLbl.Visible = False
+WdLbl.Visible = False
+HtBox.Visible = False
+WdBox.Visible = False
+CmLbl1.Visible = False
+CmLbl2.Visible = False
+End If
+End Sub
+
+
+Private Sub UserForm_Initialize()
+    With ComboBox1
+        .AddItem "Please select size..."
+        .AddItem "Full page"
+        .AddItem "Quarter page"
+        .AddItem "Quarter page with strapline"
+        .AddItem "Half page vertical"
+        .AddItem "Half page vertical with strapline"
+        .AddItem "Half page horisontal"
+        .AddItem "Half page horisontal with strapline"
+        .AddItem "Custom..."
+    End With
+    ComboBox1.Value = "Please select size..."
+End Sub
