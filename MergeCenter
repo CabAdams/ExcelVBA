@@ -1,0 +1,35 @@
+Sub MergeCenter()
+'
+' MergeToggle Macro
+' Merge and Center or Unmerge Shortcut
+'
+' Keyboard Shortcut: Ctrl+Shift+M
+'
+    If Selection.MergeCells = True Then
+        With Selection
+        .HorizontalAlignment = xlGeneral
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = True
+    End With
+    Selection.UnMerge
+    Else
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+        .WrapText = False
+        .Orientation = 0
+        .AddIndent = False
+        .IndentLevel = 0
+        .ShrinkToFit = False
+        .ReadingOrder = xlContext
+        .MergeCells = False
+    End With
+    Selection.Merge
+    End If
+End Sub
