@@ -1,0 +1,45 @@
+Sub Breaklinks()
+    
+    Dim wks As Worksheet
+    Dim rngSearch As Range
+    Dim cl As Range
+
+    'Loop through each sheet
+    
+    For Each wks In ActiveWorkbook.Worksheets
+
+        'Inform the user of progress
+        Application.StatusBar = "Searching " & wks.Name
+
+        'Set the range to search
+        On Error Resume Next
+        Set rngSearch = wks.UsedRange.SpecialCells(xlCellTypeFormulas)
+
+        If Not Err.Number = 1004 Then
+            'Search only cells with formulas
+            On Error GoTo 0
+            For Each cl In rngSearch
+
+                'If the formula contains ".xls]", it must link to an external sheet
+                If InStr(1, cl.Formula, "]") > 1 Then
+                    With cl
+                        On Error Resume Next
+                        
+                        On Error GoTo 0
+
+                        'Cement the value and change the font colour
+                        .Value = .Value
+                        .Font.Color = RGB(192, 0, 0)
+
+                    End With
+                End If
+            Next cl
+        Else
+            'No formulas in sheet
+            On Error GoTo 0
+        End If
+    Next wks
+    
+    Application.StatusBar = False
+
+End Sub
