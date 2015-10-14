@@ -1,0 +1,21 @@
+Sub CheckDependents()
+Dim r As Integer
+Dim c As Integer
+Dim Count As Integer
+Dim Cell As Variant
+
+r = Selection.Rows.Count
+c = Selection.Columns.Count
+Count = r * c
+
+If Count > 999 Then
+    MsgBox "Too many cells could cause Excel to crash. Please re-run with fewer cells selected.", vbOKOnly
+    Exit Sub
+Else:
+    For Each Cell In Selection
+    Cell.Select
+    Selection.ShowDependents
+    Next
+End If
+
+End Sub
