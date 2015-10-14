@@ -1,0 +1,41 @@
+Sub WhiteFill()
+Dim rn As Integer
+Dim cn As Integer
+Dim r As Integer
+Dim c As Integer
+Dim i As Integer
+Dim j As Integer
+Dim MyRange As Variant
+Dim MyAddress As Variant
+
+Application.ScreenUpdating = False
+
+With Selection
+    r = .Row
+    c = .Column
+    rn = .Rows.Count
+    cn = .Columns.Count
+    MyAddress = .Address
+            
+End With
+
+
+For i = r To rn + r - 1
+    For j = c To cn + c - 1
+    Cells(i, j).Select
+    If Selection.Interior.Pattern = xlNone Then
+        With Selection.Interior
+            .Pattern = xlSolid
+            .PatternColorIndex = xlAutomatic
+            .Color = RGB(255, 255, 255)
+            .TintAndShade = 0
+            .PatternTintAndShade = 0
+        End With
+    End If
+    Next j
+Next i
+Range(MyAddress).Select
+
+Application.ScreenUpdating = True
+
+End Sub
