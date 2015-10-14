@@ -1,0 +1,11 @@
+Sub NumFormat()
+    If Selection.NumberFormat = "#,##0_);(#,##0);""--""_);@_)" Then
+        Selection.NumberFormat = "#,##0.0_);(#,##0.0);""--""_);@_)"
+    Else
+    If Selection.NumberFormat = "#,##0.0_);(#,##0.0);""--""_);@_)" Then
+        Selection.NumberFormat = "#,##0.00_);(#,##0.00);""--""_);@_)"
+    Else
+        Selection.NumberFormat = "#,##0_);(#,##0);""--""_);@_)"
+    End If
+    End If
+End Sub
