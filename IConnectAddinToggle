@@ -1,0 +1,20 @@
+Sub IConnectAddinToggle()
+     
+    Dim qResult As Integer
+    If AddIns("Iconnect").Installed = True Then
+        qResult = MsgBox("You are about to switch Iconnect off. Do you wish to continue?", vbYesNo + vbQuestion, "Iconnext add-in switch off")
+        If qResult = 6 Then
+            AddIns("Iconnect").Installed = False
+        Else
+            Exit Sub
+        End If
+    ElseIf AddIns("Iconnect").Installed = False Then
+        qResult = MsgBox("You are about to switch Iconnect on. Do you wish to continue?", vbYesNo + vbQuestion, "Iconnext add-in switch on")
+        If qResult = 6 Then
+            AddIns("Iconnect").Installed = True
+        Else
+            Exit Sub
+        End If
+    End If
+     
+End Sub
