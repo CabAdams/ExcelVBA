@@ -1,0 +1,17 @@
+Sub CellColor()
+Dim r As Integer
+Dim G As Integer
+Dim B As Integer
+Dim RGB As Long
+Dim GetRGB As String
+Dim MyDataObj As New DataObject
+
+RGB = ActiveCell.Interior.Color
+r = RGB And 255
+G = RGB \ 256 And 255
+B = RGB \ 256 ^ 2 And 255
+MyDataObj.SetText r & ", " & G & ", " & B
+MyDataObj.PutInClipboard
+GetRGB = "RGB: " & r & ", " & G & ", " & B
+MsgBox GetRGB & vbNewLine & "Copied to clipboard.", vbInformation, "RGB of cell fill"
+End Sub
