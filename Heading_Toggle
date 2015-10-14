@@ -1,0 +1,60 @@
+Sub Heading()
+
+    If Selection.Interior.Pattern = xlNone Or Selection.Interior.ThemeColor = xlThemeColorDark1 Or Selection.Interior.Color = RGB(255, 255, 255) Then
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+        With Selection.Font
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = True
+    Else
+    If Selection.Interior.ThemeColor = xlThemeColorLight1 Then
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorLight2
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+        With Selection.Font
+        .ThemeColor = xlThemeColorDark1
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = True
+    Else
+    If Selection.Interior.ThemeColor = xlThemeColorLight2 Then
+        With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent2
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+        With Selection.Font
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = True
+    Else
+     If Selection.Interior.ThemeColor = xlThemeColorAccent2 Then
+        With Selection.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+       With Selection.Font
+        .ThemeColor = xlThemeColorLight1
+        .TintAndShade = 0
+    End With
+    Selection.Font.Bold = False
+    End If
+    End If
+    End If
+    End If
+End Sub
