@@ -1,0 +1,3 @@
+Sub YesNoFormat()
+     Selection.NumberFormat = "[Green]""Yes"";[Red]""ERROR"";[Red]""NO"""
+End Sub
