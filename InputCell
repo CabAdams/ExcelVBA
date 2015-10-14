@@ -1,0 +1,12 @@
+Sub InputCell()
+
+If Selection.Interior.Color = RGB(255, 255, 204) And Selection.Font.Color = RGB(0, 112, 192) Then
+    Selection.Interior.Color = RGB(255, 255, 255)
+    Selection.Font.Color = RGB(0, 0, 0)
+    Selection.Borders.LineStyle = xlNone
+    Else:   Selection.Interior.Color = RGB(255, 255, 204)
+            Selection.Font.Color = RGB(0, 112, 192)
+            Selection.Borders.Color = RGB(166, 166, 166)
+End If
+
+End Sub
