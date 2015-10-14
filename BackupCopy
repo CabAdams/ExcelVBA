@@ -1,0 +1,36 @@
+Sub BackupCopy()
+    Dim CurrentFileName  As String
+    Dim CurrentFileNameExt  As String
+    Dim CurrentFile As String
+    Dim FileSaveTime  As String
+    Dim NewFileName As String
+ 
+    Application.ScreenUpdating = False    ' Prevents screen refreshing.
+
+    On Error GoTo ErrMsg
+    
+    CurrentFile = ActiveWorkbook.Name
+    Select Case ActiveWorkbook.FileFormat
+                Case 51: CurrentFileNameExt = ".xlsx"
+                Case 52: CurrentFileNameExt = ".xlsm"
+                Case 56: CurrentFileNameExt = ".xls"
+                Case Else: CurrentFileNameExt = ".xlsb"
+    End Select
+        
+    If Len(Dir(ActiveWorkbook.Path & "\old\", vbDirectory)) = 0 Then
+        MkDir ActiveWorkbook.Path & "\old\"
+    End If
+    
+    CurrentFileName = Left(CurrentFile, (InStrRev(CurrentFile, ".", -1, vbTextCompare) - 1))
+    FileSaveTime = Format(Excel.Application.ActiveWorkbook.BuiltinDocumentProperties("Last Save Time"), "yyyy.mm.dd HH.mm")
+    NewFileName = ActiveWorkbook.Path & "\old\" & CurrentFileName & " " & FileSaveTime & CurrentFileNameExt
+      
+    ActiveWorkbook.SaveCopyAs Filename:=NewFileName
+    ActiveWorkbook.Save
+
+    Application.ScreenUpdating = True
+    Exit Sub
+
+ErrMsg:         MsgBox "Please save current file first", vbOKOnly
+    
+End Sub
