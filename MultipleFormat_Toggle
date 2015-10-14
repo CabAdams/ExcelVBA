@@ -1,0 +1,15 @@
+Sub MultipleFormat()
+    If Selection.NumberFormat = "#,##0""x""_);""nm"";""--""_);@_)" Then
+        Selection.NumberFormat = "#,##0.0""x""_);""nm"";""--""_);@_)"
+    Else
+    If Selection.NumberFormat = "#,##0.0""x""_);""nm"";""--""_);@_)" Then
+        Selection.NumberFormat = "#,##0.00""x""_);""nm"";""--""_);@_)"
+    Else
+    If Selection.NumberFormat = "#,##0.00""x""_);""nm"";""--""_);@_)" Then
+        Selection.NumberFormat = "#,##0""x""_);""nm"";""--""_);@_)"
+    Else
+        Selection.NumberFormat = "#,##0.0""x""_);""nm"";""--""_);@_)"
+    End If
+    End If
+    End If
+End Sub
