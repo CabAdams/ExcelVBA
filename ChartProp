@@ -1,0 +1,30 @@
+Sub ChartProp()
+'
+' ChartProp Macro
+    
+With ActiveChart.Parent
+    .Placement = xlMove
+    
+End With
+
+With ActiveChart
+    If .HasLegend = True Then
+        .Legend.Position = xlLegendPositionBottom
+        .Legend.Border.LineStyle = xlNone
+        .Legend.Interior.ColorIndex = 0
+    End If
+    If .HasTitle = True Then
+        .ChartTitle.Delete
+    End If
+    If .HasAxis(xlValue) = True Then
+        .Axes(xlValue).HasMajorGridlines = False
+    End If
+    .ChartArea.Border.LineStyle = xlNone
+    .ChartArea.Interior.Color = RGB(256, 256, 256)
+    .PlotArea.Interior.ColorIndex = xlNone
+    .ChartArea.Font.Size = 7
+    .ChartArea.Font.Name = "Arial"
+    
+End With
+
+End Sub
