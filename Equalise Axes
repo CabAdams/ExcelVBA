@@ -1,0 +1,31 @@
+Option Explicit
+Sub EquateAxes()
+Dim AxMax1 As Double
+Dim AxMin1 As Double
+Dim AxMax2 As Double
+Dim AxMin2 As Double
+Dim AxMaxOut As Double
+Dim AxMinOut As Double
+Dim Cht As ChartObject
+
+    For Each Cht In ActiveSheet.ChartObjects
+        Cht.Chart.Axes(xlValue).MaximumScaleIsAuto = True
+        Cht.Chart.Axes(xlValue).MinimumScaleIsAuto = True
+        Cht.Chart.Axes(xlValue, xlSecondary).MaximumScaleIsAuto = True
+        Cht.Chart.Axes(xlValue, xlSecondary).MinimumScaleIsAuto = True
+        
+        AxMax1 = Cht.Chart.Axes(xlValue).MaximumScale
+        AxMax2 = Cht.Chart.Axes(xlValue, xlSecondary).MaximumScale
+        AxMin1 = Cht.Chart.Axes(xlValue).MinimumScale
+        AxMin2 = Cht.Chart.Axes(xlValue, xlSecondary).MinimumScale
+        
+        AxMaxOut = Application.Max(AxMax1, AxMax2)
+        AxMinOut = Application.Min(AxMin1, AxMin2)
+        
+        Cht.Chart.Axes(xlValue).MaximumScale = AxMaxOut
+        Cht.Chart.Axes(xlValue, xlSecondary).MaximumScale = AxMaxOut
+        Cht.Chart.Axes(xlValue).MinimumScale = AxMinOut
+        Cht.Chart.Axes(xlValue, xlSecondary).MinimumScale = AxMinOut
+    Next Cht
+
+End Sub
